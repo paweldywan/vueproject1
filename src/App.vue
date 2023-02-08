@@ -2,21 +2,29 @@
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
     <OpenLayersWmts />
+    <Suspense>
+        <OpenLayersWmts2 />
+        <template #fallback>
+            ...Loading
+        </template>
+    </Suspense>
     <OpenLayersDemo />
 </template>
 
 <script lang="ts">
     import { defineComponent } from 'vue';
     import HelloWorld from './components/HelloWorld.vue';
-    //import OpenLayersDemo from './components/OpenLayersDemo.vue';
-    //import OpenLayersWmts from './components/OpenLayersWmts.vue';
+    import OpenLayersDemo from './components/OpenLayersDemo.vue';
+    import OpenLayersWmts from './components/OpenLayersWmts.vue';
+    import OpenLayersWmts2 from './components/OpenLayersWmts2.vue';
 
     export default defineComponent({
         name: 'App',
         components: {
-            HelloWorld//,
-            //OpenLayersDemo,
-            //OpenLayersWmts
+            HelloWorld,
+            OpenLayersDemo,
+            OpenLayersWmts,
+            OpenLayersWmts2
         }
     });
 </script>

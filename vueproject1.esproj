@@ -17,4 +17,7 @@
   <ItemGroup>
     <None Remove="src\components\OpenLayersDemo.vue" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="src\components\5jofgvbi.vxo~" />
+  </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
 <template>
     <div class="post">
-        <div v-if="loading" class="loading">
+        <div v-if="data.loading" class="loading">
             Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationvue">https://aka.ms/jspsintegrationvue</a> for more details.
         </div>
 
-        <div v-if="post" class="content">
+        <div v-if="data.post" class="content">
             <table>
                 <thead>
                     <tr>
@@ -15,7 +15,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="forecast in post" :key="forecast.date">
+                    <tr v-for="forecast in data.post" :key="forecast.date">
                         <td>{{ forecast.date }}</td>
                         <td>{{ forecast.temperatureC }}</td>
                         <td>{{ forecast.temperatureF }}</td>
@@ -27,47 +27,36 @@
     </div>
 </template>
 
-<script lang="ts">
-    import { defineComponent } from 'vue';
+<script lang="ts" setup>
+    import { reactive, onMounted } from 'vue';
 
     type Forecasts = {
         date: string
     }[];
 
     interface Data {
-        loading: boolean,
-        post: null | Forecasts
+        post: null | Forecasts,
+        loading: boolean
     }
 
-    export default defineComponent({
-        data(): Data {
-            return {
-                loading: false,
-                post: null
-            };
-        },
-        created() {
-            // fetch the data when the view is created and the data is
-            // already being observed
-            this.fetchData();
-        },
-        watch: {
-            // call again the method if the route changes
-            '$route': 'fetchData'
-        },
-        methods: {
-            fetchData(): void {
-                this.post = null;
-                this.loading = true;
-
-                fetch('weatherforecast')
-                    .then(r => r.json())
-                    .then(json => {
-                        this.post = json as Forecasts;
-                        this.loading = false;
-                        return;
-                    });
-            }
-        },
+    const data = reactive<Data>({
+        loading: true,
+        post: null
     });
+
+    const fetchData = async () => {
+        data.post = null;
+
+        data.loading = true;
+
+        const r = await fetch('weatherforecast');
+
+        const json = await r.json();
+
+        data.post = json as Forecasts;
+
+        data.loading = false;
+    };
+
+    onMounted(fetchData);
 </script>

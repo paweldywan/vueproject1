@@ -165,7 +165,7 @@
     </ol-map>
 </template>
 
-<script lang="ts">
+<script>
     import {
         ref,
         inject,
@@ -299,7 +299,6 @@
             const swipeControl = ref(null)
             const jawgLayer = ref(null)
             const osmLayer = ref(null)
-            const wmtsLayer = ref(null)
             const layerList = ref([])
             const path = ref([
                 [
@@ -330,7 +329,6 @@
 
                 layerList.value.push(jawgLayer.value.tileLayer);
                 layerList.value.push(osmLayer.value.tileLayer);
-                layerList.value.push(wmtsLayer.value.tileLayer);
                 console.log(layerList.value)
                 console.log(animationPath.value)
             });
@@ -403,7 +401,6 @@
                 jawgLayer,
                 swipeControl,
                 osmLayer,
-                wmtsLayer,
                 starIcon,
                 changeDrawType,
                 path,

@@ -13,7 +13,7 @@
     </ol-map>
 </template>
 
-<script lang="ts">
+<script>
     import {
         ref
     } from 'vue'
